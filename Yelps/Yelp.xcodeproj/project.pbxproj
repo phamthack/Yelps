@@ -14,6 +14,8 @@
 		A5CA68931DB3E1EA0085DCF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5CA68911DB3E1EA0085DCF9 /* Main.storyboard */; };
 		A5CA68951DB3E1EA0085DCF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5CA68941DB3E1EA0085DCF9 /* Assets.xcassets */; };
 		A5CA68981DB3E1EA0085DCF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5CA68961DB3E1EA0085DCF9 /* LaunchScreen.storyboard */; };
+		EF0D21DF1EFE21F500D24598 /* OfferingDealsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D21DE1EFE21F500D24598 /* OfferingDealsCell.swift */; };
+		EF0D21E11EFE26FC00D24598 /* FilterDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D21E01EFE26FC00D24598 /* FilterDatas.swift */; };
 		EFE238A21EFC3C11007E8CEB /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE238A11EFC3C11007E8CEB /* BusinessCell.swift */; };
 		EFE238A41EFC4CEC007E8CEB /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE238A31EFC4CEC007E8CEB /* FiltersViewController.swift */; };
 		F91065DC1B85B789A2434556 /* Pods_Yelp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2893DC5CAF45E9E472DFFCC /* Pods_Yelp.framework */; };
@@ -32,6 +34,8 @@
 		A5CA68941DB3E1EA0085DCF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5CA68971DB3E1EA0085DCF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A5CA68991DB3E1EA0085DCF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF0D21DE1EFE21F500D24598 /* OfferingDealsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferingDealsCell.swift; sourceTree = "<group>"; };
+		EF0D21E01EFE26FC00D24598 /* FilterDatas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDatas.swift; sourceTree = "<group>"; };
 		EFE238A11EFC3C11007E8CEB /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		EFE238A31EFC4CEC007E8CEB /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				A581AE311DB53860006544B2 /* Business.swift */,
+				EF0D21E01EFE26FC00D24598 /* FilterDatas.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -128,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				EFE238A11EFC3C11007E8CEB /* BusinessCell.swift */,
+				EF0D21DE1EFE21F500D24598 /* OfferingDealsCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -260,7 +266,9 @@
 				A581AE341DB53945006544B2 /* YelpClient.swift in Sources */,
 				A581AE321DB53860006544B2 /* Business.swift in Sources */,
 				EFE238A41EFC4CEC007E8CEB /* FiltersViewController.swift in Sources */,
+				EF0D21DF1EFE21F500D24598 /* OfferingDealsCell.swift in Sources */,
 				A5CA688E1DB3E1EA0085DCF9 /* AppDelegate.swift in Sources */,
+				EF0D21E11EFE26FC00D24598 /* FilterDatas.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

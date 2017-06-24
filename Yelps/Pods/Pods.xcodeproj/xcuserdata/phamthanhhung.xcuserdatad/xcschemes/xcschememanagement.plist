@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BEMCheckBox.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,7 +37,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3471948B70741B344EEB7CBF133EACC4</key>
+		<key>2D99FE63605356CC641DBD5E07DF754E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -43,6 +48,11 @@
 			<true/>
 		</dict>
 		<key>7BE727D93261EAB78C6AF9EF46ED1BFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC19A72FB7D1DB0B2CC5F6C5CF2400F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

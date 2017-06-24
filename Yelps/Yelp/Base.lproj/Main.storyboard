@@ -131,7 +131,7 @@
                     <navigationItem key="navigationItem" id="MEr-XQ-Avf">
                         <barButtonItem key="leftBarButtonItem" title="Filter" id="vIs-Lr-cqu">
                             <connections>
-                                <segue destination="2fz-4v-KVr" kind="presentation" id="2H5-xs-Mgu"/>
+                                <segue destination="2fz-4v-KVr" kind="presentation" identifier="ResultsToFilters" id="2H5-xs-Mgu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -154,7 +154,76 @@
                     <view key="view" contentMode="scaleToFill" id="M9r-8P-XQC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EkW-61-Mhb">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OfferingDealsCell" id="L0G-bo-aOd" customClass="OfferingDealsCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L0G-bo-aOd" id="t3E-lE-95b">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offering a Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6b-Xc-AtN">
+                                                    <rect key="frame" x="8" y="11.5" width="115" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Mr-uh-znA">
+                                                    <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="onChange:" destination="L0G-bo-aOd" eventType="valueChanged" id="j3y-hm-P7b"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="S6b-Xc-AtN" firstAttribute="centerY" secondItem="t3E-lE-95b" secondAttribute="centerY" id="IJM-SK-BbL"/>
+                                                <constraint firstItem="3Mr-uh-znA" firstAttribute="centerY" secondItem="t3E-lE-95b" secondAttribute="centerY" id="chS-o9-cJO"/>
+                                                <constraint firstAttribute="trailing" secondItem="3Mr-uh-znA" secondAttribute="trailing" constant="8" id="s0i-bY-5gD"/>
+                                                <constraint firstItem="S6b-Xc-AtN" firstAttribute="leading" secondItem="t3E-lE-95b" secondAttribute="leading" constant="8" id="sjb-Xc-eDV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="offeringDealsSwitch" destination="3Mr-uh-znA" id="G9J-gh-QjS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="axQ-vz-gDK">
+                                        <rect key="frame" x="0.0" y="72" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="axQ-vz-gDK" id="SMt-4L-hZZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="8EE-7h-b23">
+                                        <rect key="frame" x="0.0" y="116" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8EE-7h-b23" id="5XU-g3-ew5">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="8Ee-DM-sgh">
+                                        <rect key="frame" x="0.0" y="160" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Ee-DM-sgh" id="Tmu-S9-sS2">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="EkW-61-Mhb" secondAttribute="trailing" id="FrA-vh-yTC"/>
+                            <constraint firstItem="EkW-61-Mhb" firstAttribute="leading" secondItem="M9r-8P-XQC" secondAttribute="leading" id="W6y-j3-D30"/>
+                            <constraint firstItem="EkW-61-Mhb" firstAttribute="top" secondItem="14n-Bu-fRm" secondAttribute="bottom" id="fT5-DG-jUx"/>
+                            <constraint firstItem="NPT-bN-FMU" firstAttribute="top" secondItem="EkW-61-Mhb" secondAttribute="bottom" id="iTQ-Fh-VvR"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="O7o-WF-klJ">
                         <barButtonItem key="leftBarButtonItem" title="Save" id="Zaj-IO-Kih">
@@ -168,6 +237,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="EkW-61-Mhb" id="7LJ-Ge-CAH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s0A-pf-9cj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

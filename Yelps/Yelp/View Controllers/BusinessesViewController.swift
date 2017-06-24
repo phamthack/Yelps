@@ -42,7 +42,7 @@ class BusinessesViewController: UIViewController {
     fileprivate func doSearch() {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        Business.search(with: searchBar.text!) { (businesses: [Business]?, error: Error?) in
+        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: FilterDatas.sharedInstance.offeringDeals) { (businesses: [Business]?, error: Error?) in
             if let businesses = businesses {
                 self.businesses = businesses
                 self.tableView.reloadData()
@@ -56,20 +56,16 @@ class BusinessesViewController: UIViewController {
             MBProgressHUD.hide(for: self.view, animated: true)
         }
         
-        // Example of Yelp search with more search options specified
-        /*
-         Business.search(with: "Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]?, error: Error?) in
-         if let businesses = businesses {
-         self.businesses = businesses
-         
-         for business in businesses {
-         print(business.name!)
-         print(business.address!)
-         }
-         }
-         }
-         */
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ResultsToFilters" {
+            if let nvc = segue.destination as? UINavigationController, let filtersVC = nvc.topViewController as? FiltersViewController {
+                filtersVC.delegate = self
+            }
+        }
+    }
+
 }
 
 extension BusinessesViewController : UISearchBarDelegate {
@@ -112,5 +108,11 @@ extension BusinessesViewController : UITableViewDelegate, UITableViewDataSource 
         cell.business = businesses[indexPath.row]
         
         return cell
+    }
+}
+
+extension BusinessesViewController : FiltersViewControllerDelegate {
+    func filtersViewControllerDidUpdate(_ filtersViewController: FiltersViewController) {
+        doSearch()
     }
 }
