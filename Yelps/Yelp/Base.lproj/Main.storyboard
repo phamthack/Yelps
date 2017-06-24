@@ -21,6 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EbW-jy-9zG">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="111" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rVJ-xQ-xbR">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -122,22 +125,32 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="EbW-jy-9zG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="4MG-az-kOg"/>
                             <constraint firstItem="rVJ-xQ-xbR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="A9D-ww-gyj"/>
+                            <constraint firstAttribute="trailing" secondItem="EbW-jy-9zG" secondAttribute="trailing" id="DuA-YO-YfC"/>
                             <constraint firstAttribute="trailing" secondItem="rVJ-xQ-xbR" secondAttribute="trailing" id="Zcn-ZW-nnR"/>
+                            <constraint firstItem="EbW-jy-9zG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gSD-2O-CFg"/>
                             <constraint firstItem="rVJ-xQ-xbR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jm4-A8-Olp"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EbW-jy-9zG" secondAttribute="bottom" id="oaC-yz-4Ie"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="rVJ-xQ-xbR" secondAttribute="bottom" id="ttn-8D-dDv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MEr-XQ-Avf">
                         <barButtonItem key="leftBarButtonItem" title="Filter" id="vIs-Lr-cqu"/>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="oSQ-Xy-naU">
+                            <connections>
+                                <action selector="mapButtonTapped:" destination="BYZ-38-t0r" id="EJ7-YL-I7y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapView" destination="EbW-jy-9zG" id="hoP-dq-Heg"/>
                         <outlet property="tableView" destination="rVJ-xQ-xbR" id="pZ3-CG-Atl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1031.25" y="35.91549295774648"/>
+            <point key="canvasLocation" x="866" y="36"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LTU-IC-wQV">
@@ -156,13 +169,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1I-R0-ZMu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="33.75" y="35.91549295774648"/>
-        </scene>
-        <!--AV Player View Controller-->
-        <scene sceneID="Bge-Ue-zyU">
-            <objects>
-                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="NtY-hH-Ld2" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="F91-8Q-HHf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
 </document>

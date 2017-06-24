@@ -1,17 +1,15 @@
 //
 //  BusinessesViewController.swift
 //  Yelp
-//
-//  Created by Chau Vo on 10/17/16.
-//  Copyright © 2016 CoderSchool. All rights reserved.
-//
 
 import UIKit
 import MBProgressHUD
+import MapKit
 
 class BusinessesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mapView: MKMapView!
     
     var businesses: [Business]?
     var searchBar: UISearchBar!
@@ -19,12 +17,16 @@ class BusinessesViewController: UIViewController {
     var isMoreDataLoading = false
     var loadLimit = 20
     var loadMoreOffset = 21
-
+    
+    var nameToBusiness  = [String : Business] ()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        mapView.delegate = self
         
         // Initialize the UISearchBar
         searchBar = UISearchBar()
@@ -43,6 +45,7 @@ class BusinessesViewController: UIViewController {
             if let businesses = businesses {
                 self.businesses = businesses
                 self.tableView.reloadData()
+                self.mapViewReloadData()
                 
                 for business in businesses {
                     print(business.name!)
@@ -51,6 +54,38 @@ class BusinessesViewController: UIViewController {
             }
             
             MBProgressHUD.hide(for: self.view, animated: true)
+        }
+        
+    }
+    
+    func mapViewReloadData() {
+        self.tableView.reloadData()
+        
+        // add annotations to map view
+        var coordinate = CLLocationCoordinate2DMake(37.0,-122.0);
+        var annotation = MKPointAnnotation()
+        self.mapView.removeAnnotations(self.mapView.annotations);
+        if let businesses = self.businesses {
+            for business in businesses {
+                if let lat = business.lat,
+                    let lon = business.lon {
+                    coordinate = CLLocationCoordinate2DMake(lat, lon)
+                    annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    annotation.title = business.name
+                    annotation.subtitle = business.address
+                    
+                    self.nameToBusiness[annotation.title! + annotation.subtitle!] = business
+                    self.mapView.addAnnotation(annotation)
+                    
+                }
+            }
+            
+            self.mapView.selectAnnotation(annotation, animated: true);
+            let  viewRegion =
+                MKCoordinateRegionMakeWithDistance(coordinate, 2000, 2000);
+            let adjustedRegion = self.mapView.regionThatFits(viewRegion)
+            self.mapView.setRegion(adjustedRegion, animated: true)
         }
         
     }
@@ -73,6 +108,7 @@ class BusinessesViewController: UIViewController {
                 }
                 
                 self.tableView.reloadData()
+                self.mapViewReloadData()
                 
                 MBProgressHUD.hide(for: self.view, animated: true)
             }
@@ -98,6 +134,26 @@ class BusinessesViewController: UIViewController {
                 loadMoreOffset += loadLimit
             }
         }
+    }
+    
+    @IBAction func mapButtonTapped(_ sender: UIBarButtonItem) {
+        
+        if sender.title == "Map" {
+            let transitionParams :  UIViewAnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
+            UIView.transition(from: self.tableView,
+                              to: self.mapView,
+                              duration: 0.5,
+                              options: transitionParams,
+                              completion: nil);
+        } else {
+            let transitionParams :  UIViewAnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
+            UIView.transition(from: self.mapView,
+                              to: self.tableView,
+                              duration: 0.5,
+                              options: transitionParams,
+                              completion: nil);
+        }
+        sender.title = sender.title == "List" ? "Map" : "List"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -133,6 +189,20 @@ extension BusinessesViewController : UISearchBarDelegate {
         loadMoreOffset = loadLimit + 1
         doSearch(offset: 0)
     }
+}
+
+extension BusinessesViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "loc")
+        
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        
+        // annotationView.image = UIImage(named: "phone.png")
+        return annotationView
+    }
+    
 }
 
 extension BusinessesViewController : UITableViewDelegate, UITableViewDataSource {
