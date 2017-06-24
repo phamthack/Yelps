@@ -13,8 +13,12 @@ class BusinessesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var businesses: [Business]!
+    var businesses: [Business]?
     var searchBar: UISearchBar!
+    
+    var isMoreDataLoading = false
+    var loadLimit = 20
+    var loadMoreOffset = 21
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,19 +34,12 @@ class BusinessesViewController: UIViewController {
         navigationItem.titleView = searchBar
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 120
+        tableView.estimatedRowHeight = 100
         tableView.tableFooterView = UIView()
         
         // Perform the first search when the view controller first loads
-        doSearch()
         
-    }
-    
-    // Perform the search.
-    fileprivate func doSearch() {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        
-        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: FilterDatas.sharedInstance.offeringDeals) { (businesses: [Business]?, error: Error?) in
+        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: nil, offset: nil) { (businesses: [Business]?, error: Error?) in
             if let businesses = businesses {
                 self.businesses = businesses
                 self.tableView.reloadData()
@@ -58,11 +55,56 @@ class BusinessesViewController: UIViewController {
         
     }
     
+    // Perform the search.
+    fileprivate func doSearch(offset : Int) {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: nil, offset: offset) { (businesses, error) in
+            self.isMoreDataLoading = false
+            
+            if error != nil || businesses == nil {
+                MBProgressHUD.hide(for: self.view, animated: true)
+            } else {
+                
+                if offset == 0 {
+                    self.businesses = businesses
+                } else {
+                    self.businesses?.append(contentsOf: businesses!)
+                }
+                
+                self.tableView.reloadData()
+                
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
+            
+        }
+        
+    }
+    
+    // enable inifite scroll
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                
+                isMoreDataLoading = true
+                
+                // load more results
+                doSearch(offset: loadMoreOffset)
+                loadMoreOffset += loadLimit
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ResultsToFilters" {
-            if let nvc = segue.destination as? UINavigationController, let filtersVC = nvc.topViewController as? FiltersViewController {
-                filtersVC.delegate = self
-            }
+//            if let nvc = segue.destination as? UINavigationController, let filtersVC = nvc.topViewController as? FiltersViewController {
+//                filtersVC.delegate = self
+//            }
         }
     }
 
@@ -83,13 +125,13 @@ extension BusinessesViewController : UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
-        doSearch()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 //        searchSettings.searchString = searchBar.text
         searchBar.resignFirstResponder()
-        doSearch()
+        loadMoreOffset = loadLimit + 1
+        doSearch(offset: 0)
     }
 }
 
@@ -105,14 +147,14 @@ extension BusinessesViewController : UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
         
-        cell.business = businesses[indexPath.row]
+        cell.business = businesses?[indexPath.row]
         
         return cell
     }
 }
-
-extension BusinessesViewController : FiltersViewControllerDelegate {
-    func filtersViewControllerDidUpdate(_ filtersViewController: FiltersViewController) {
-        doSearch()
-    }
-}
+//
+//extension BusinessesViewController : FiltersViewControllerDelegate {
+//    func filtersViewControllerDidUpdate(_ filtersViewController: FiltersViewController) {
+//        doSearch()
+//    }
+//}
