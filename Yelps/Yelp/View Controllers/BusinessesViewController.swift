@@ -184,6 +184,7 @@ extension BusinessesViewController : UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        doSearch(offset: 0)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
