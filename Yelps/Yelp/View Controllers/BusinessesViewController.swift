@@ -187,7 +187,6 @@ extension BusinessesViewController : UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        searchSettings.searchString = searchBar.text
         searchBar.resignFirstResponder()
         loadMoreOffset = loadLimit + 1
         doSearch(offset: 0)
@@ -202,7 +201,6 @@ extension BusinessesViewController: MKMapViewDelegate {
         annotationView.canShowCallout = true
         annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         
-        // annotationView.image = UIImage(named: "phone.png")
         return annotationView
     }
     

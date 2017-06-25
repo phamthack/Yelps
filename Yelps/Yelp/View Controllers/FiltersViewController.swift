@@ -270,10 +270,6 @@ extension FiltersViewController : UITableViewDelegate, UITableViewDataSource {
 
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 20
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch indexPath.section {
