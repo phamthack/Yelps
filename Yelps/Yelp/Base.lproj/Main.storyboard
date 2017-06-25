@@ -191,8 +191,8 @@
                                                         <constraint firstAttribute="height" constant="32" id="Rcx-k5-a0b"/>
                                                         <constraint firstAttribute="width" constant="48" id="S6f-og-dbB"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button" image="yelp_off_transparent"/>
-                                                    <state key="selected" image="yelp_on_transparent"/>
+                                                    <state key="normal" title="Button" image="switch-off-icon"/>
+                                                    <state key="selected" image="switch-on-icon"/>
                                                     <connections>
                                                         <action selector="switchChanged:" destination="6PQ-N3-ZVx" eventType="touchUpInside" id="ZBB-fK-tc0"/>
                                                     </connections>
@@ -367,7 +367,7 @@
     </scenes>
     <resources>
         <image name="down-arrow" width="20" height="20"/>
-        <image name="yelp_off_transparent" width="75" height="32"/>
-        <image name="yelp_on_transparent" width="75" height="36"/>
+        <image name="switch-off-icon" width="128" height="128"/>
+        <image name="switch-on-icon" width="128" height="128"/>
     </resources>
 </document>
