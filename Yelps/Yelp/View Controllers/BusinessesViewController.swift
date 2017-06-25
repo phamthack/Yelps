@@ -20,7 +20,7 @@ class BusinessesViewController: UIViewController {
     
     var nameToBusiness  = [String : Business] ()
     
-    var saveFilters = SaveFilters()
+    var saveFilters = SaveFilters.sharedInstance
     let distanceInMeters = [0, 483, 1609, 8047, 40000]
     
     override func viewDidLoad() {
@@ -40,6 +40,7 @@ class BusinessesViewController: UIViewController {
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: nil, offset: nil, radius: nil) { (businesses: [Business]?, error: Error?) in
             if let businesses = businesses {
                 self.businesses = businesses
