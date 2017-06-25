@@ -255,8 +255,16 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rh8-5W-IdJ" customClass="DLRadioButton">
-                                                    <rect key="frame" x="282" y="7" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rh8-5W-IdJ" customClass="DLRadioButton">
+                                                    <rect key="frame" x="280" y="6" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="32" id="Sj3-Ee-9gN"/>
+                                                        <constraint firstAttribute="width" constant="32" id="zQ2-iZ-kdE"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconSelected" value="radio-button-on-icon"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="radio-button-off-icon"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="buttonChanged:" destination="5H0-BF-Ntm" eventType="touchUpInside" id="ZLN-0k-Rb6"/>
                                                     </connections>
@@ -367,6 +375,8 @@
     </scenes>
     <resources>
         <image name="down-arrow" width="20" height="20"/>
+        <image name="radio-button-off-icon" width="32" height="32"/>
+        <image name="radio-button-on-icon" width="32" height="32"/>
         <image name="switch-off-icon" width="128" height="128"/>
         <image name="switch-on-icon" width="128" height="128"/>
     </resources>
