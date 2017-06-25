@@ -20,28 +20,27 @@ class BusinessesViewController: UIViewController {
     
     var nameToBusiness  = [String : Business] ()
     
+    var saveFilters = SaveFilters()
+    let distanceInMeters = [0, 483, 1609, 8047, 40000]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 100
+        tableView.tableFooterView = UIView()
         
         mapView.delegate = self
         
         // Initialize the UISearchBar
         searchBar = UISearchBar()
         searchBar.delegate = self
-        // Add SearchBar to the NavigationBar
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 100
-        tableView.tableFooterView = UIView()
-        
-        // Perform the first search when the view controller first loads
-        
-        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: nil, offset: nil) { (businesses: [Business]?, error: Error?) in
+        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: nil, offset: nil, radius: nil) { (businesses: [Business]?, error: Error?) in
             if let businesses = businesses {
                 self.businesses = businesses
                 self.tableView.reloadData()
@@ -54,6 +53,36 @@ class BusinessesViewController: UIViewController {
             }
             
             MBProgressHUD.hide(for: self.view, animated: true)
+        }
+    }
+    
+    // Perform the search.
+    fileprivate func doSearch(offset : Int) {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        var radius : Int? = nil
+        if self.saveFilters.distanceSelectedIndex > 0 {
+            radius = self.distanceInMeters[self.saveFilters.distanceSelectedIndex]
+        }
+        
+        Business.search(with: searchBar.text!, sort: YelpSortMode(rawValue: self.saveFilters.sortBySelectedIndex), categories: Array(self.saveFilters.selectedCategories), deals: self.saveFilters.offeringADeal, offset: offset, radius:radius) { (businesses, error) in
+            self.isMoreDataLoading = false
+            
+            if error != nil || businesses == nil {
+                MBProgressHUD.hide(for: self.view, animated: true)
+            } else {
+                
+                if offset == 0 {
+                    self.businesses = businesses
+                } else {
+                    self.businesses?.append(contentsOf: businesses!)
+                }
+                
+                self.tableView.reloadData()
+                self.mapViewReloadData()
+                
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
+            
         }
         
     }
@@ -86,33 +115,6 @@ class BusinessesViewController: UIViewController {
                 MKCoordinateRegionMakeWithDistance(coordinate, 2000, 2000);
             let adjustedRegion = self.mapView.regionThatFits(viewRegion)
             self.mapView.setRegion(adjustedRegion, animated: true)
-        }
-        
-    }
-    
-    // Perform the search.
-    fileprivate func doSearch(offset : Int) {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        
-        Business.search(with: searchBar.text!, sort: nil, categories: nil, deals: nil, offset: offset) { (businesses, error) in
-            self.isMoreDataLoading = false
-            
-            if error != nil || businesses == nil {
-                MBProgressHUD.hide(for: self.view, animated: true)
-            } else {
-                
-                if offset == 0 {
-                    self.businesses = businesses
-                } else {
-                    self.businesses?.append(contentsOf: businesses!)
-                }
-                
-                self.tableView.reloadData()
-                self.mapViewReloadData()
-                
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }
-            
         }
         
     }
@@ -157,10 +159,10 @@ class BusinessesViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ResultsToFilters" {
-//            if let nvc = segue.destination as? UINavigationController, let filtersVC = nvc.topViewController as? FiltersViewController {
-//                filtersVC.delegate = self
-//            }
+        if segue.identifier == "showFilterSegue" {
+            if let nvc = segue.destination as? UINavigationController, let filtersVC = nvc.topViewController as? FiltersViewController {
+                filtersVC.delegate = self
+            }
         }
     }
 
@@ -222,9 +224,9 @@ extension BusinessesViewController : UITableViewDelegate, UITableViewDataSource 
         return cell
     }
 }
-//
-//extension BusinessesViewController : FiltersViewControllerDelegate {
-//    func filtersViewControllerDidUpdate(_ filtersViewController: FiltersViewController) {
-//        doSearch()
-//    }
-//}
+
+extension BusinessesViewController : FiltersViewControllerDelegate {
+    func filtersViewControllerDidUpdate(_ filtersViewController: FiltersViewController) {
+        doSearch(offset: 0)
+    }
+}
